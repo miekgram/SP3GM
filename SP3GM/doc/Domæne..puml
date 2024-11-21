@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+object Streamingplatform
+object User
+object Startmenu
+object Mainmenu
+object Medias
+object Movies
+object Series
+object Season
+object Episode
+object Category
+object Login
+object List
+object HaveWatched
+object SaveForLater
+
+Streamingplatform *-- User
+User *-- Login
+User *-- List
+List <|-- HaveWatched
+List <|-- SaveForLater
+
+Streamingplatform *-- Startmenu
+Streamingplatform *-- Mainmenu
+Streamingplatform *-- Medias
+Medias <|-- Movies
+Medias <|-- Series
+Medias *-- Category
+Series *-- Season
+Series *-- Episode
+@enduml
