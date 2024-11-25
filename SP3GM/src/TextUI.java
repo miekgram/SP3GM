@@ -53,16 +53,28 @@ public class TextUI {
         }
         return choices;
     }
-
-    public void displayList(ArrayList<String> options, String msg){
+    //public void displayList(ArrayList<String> options, String msg){
+    public void displayMovieList(ArrayList<Movie> options, String msg){
         System.out.println("*******");
         System.out.println(msg);
         System.out.println("*******");
 
         int i = 1;
 
-        for (String option : options) {
-            System.out.println(i+": "+option);
+        for (Movie option : options) {
+            System.out.println(i+": "+option.getTitle()); //Tilføj de andre attributes, hvis i vil vise andet en title.
+            i++;
+        }
+    }
+    public void displaySeriesList(ArrayList<Series> options, String msg){
+        System.out.println("*******");
+        System.out.println(msg);
+        System.out.println("*******");
+
+        int i = 1;
+
+        for (Series option : options) {
+            System.out.println(i+": "+option.getTitle());
             i++;
         }
     }

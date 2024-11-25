@@ -1,10 +1,13 @@
 public class Main {
     public static void main(String[] args) {
         Startmenu startmenu = new Startmenu();
-        User user = new User("Malene", "Næ");
+        Mainmenu mainmenu = new Mainmenu();
+        //User user = new User("Malene", "Næ");
 
-        user.savedForLater.
+        //user.savedForLater.
         startmenu.startProgram();
+        User user = startmenu.getCurrentUser();
+        mainmenu.displayMainMenu(user);
 
     }
 }

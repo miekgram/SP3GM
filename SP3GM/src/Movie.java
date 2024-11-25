@@ -1,4 +1,4 @@
-public class Movie {
+public class Movie extends Media{
     Movie[] movies;
     Movie movie;
     FileIO fileIO = new FileIO();
@@ -6,7 +6,7 @@ public class Movie {
     String FilmDataPath ="data/film.csv";
 
     Movie(String title, int releaseYear, String category, float rating) {
-        super();
+        super(title, category, rating);
         this.releaseYear = releaseYear;
     }
 

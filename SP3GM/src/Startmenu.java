@@ -5,8 +5,9 @@ public class Startmenu {
     TextUI textUI;
     FileIO fileIO;
     private String userDataPath;
-    private ArrayList<User> users;
+    private ArrayList<User> users = new ArrayList<User>();
     Mainmenu mainmenu;
+    public User currentUser;
 
 
 
@@ -46,6 +47,10 @@ public class Startmenu {
         textUI.displayMsg("Welcome back!");
         String userName = textUI.promptText("Write your username: ");
         String password = textUI.promptText("Write your password: ");
+        this.currentUser = new User(userName, password);
+    }
+    public User getCurrentUser() {
+        return this.currentUser;
     }
 
 
