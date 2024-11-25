@@ -4,11 +4,13 @@ public class User {
     String userName;
     String password;
     ArrayList<Media> haveWatched;
-    ArrayList<Media> saveForLater;
+    ArrayList<Media> savedForLater;
+
 
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
+
     }
 
 

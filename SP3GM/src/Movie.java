@@ -1,18 +1,13 @@
-import java.io.File;
-import java.util.ArrayList;
-
-public class Movie extends Media{
+public class Movie {
+    Movie[] movies;
+    Movie movie;
     FileIO fileIO = new FileIO();
     int releaseYear;
+    String FilmDataPath ="data/film.csv";
 
-    Movie(String title, int releaseYear, ArrayList<String> categories, float rating){
-        super(title, categories, rating);
+    Movie(String title, int releaseYear, String category, float rating) {
+        super();
         this.releaseYear = releaseYear;
     }
-
-
-
-
-
 
 }

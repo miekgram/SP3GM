@@ -1,17 +1,14 @@
-import java.io.File;
 import java.util.ArrayList;
 
-public class Series extends Media{
+public class Series {
     FileIO fileIO;
     String releaseYear;
-    int season;
-    int episode;
+    String seasonsAndEpisode;
 
-    public Series(String title, String releaseYear, ArrayList<String> categories, float rating, int season, int episode) {
-        super(title, categories, rating);
+    public Series(String title, String releaseYear, String category, float rating, String seasonsAndEpisode) {
+        super();
         this.releaseYear = releaseYear;
-        this.season = season;
-        this.episode = episode;
+        this.seasonsAndEpisode = seasonsAndEpisode;
     }
 
 
