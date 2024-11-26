@@ -19,7 +19,7 @@ public class Mainmenu {
   public void displayMainMenu(User user){
       textUI.displayMsg("Welcome to mainmenu!");
 
-      while (true){
+
           int choice = textUI.promptNumeric( """
                 Please choose an option:
                 1. Search for a movie
@@ -40,7 +40,7 @@ public class Mainmenu {
               default : textUI.displayMsg("invalid choice, try again");
 
           }
-      }
+
   }
 
 
@@ -52,7 +52,7 @@ public class Mainmenu {
         library.addAll(movies);
         library.addAll(series);
 
-        //while(true) {
+
             String title = textUI.promptText("Enter the title of the movie or series you want to search for");
 
             for (Media medias : library) {
@@ -76,7 +76,7 @@ public class Mainmenu {
                     textUI.displayMsg("Title doesn't match, try again");
                 }
             }
-        //}
+
     }
 
 
@@ -122,7 +122,7 @@ public class Mainmenu {
     }
 
     public void removeFromSaved(User user, Media media){
-        if(!user.savedForLater.contains(media)){
+        if(user.savedForLater.contains(media)){
             user.savedForLater.remove(media);
             System.out.println(media.getTitle() + " has been removed from your saved list.");
 
