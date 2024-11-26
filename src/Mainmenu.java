@@ -1,6 +1,7 @@
 //import javax.print.attribute.standard.Media;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Mainmenu {
@@ -11,6 +12,7 @@ public class Mainmenu {
     ArrayList<Series> series = new ArrayList<Series>();
     ArrayList<Movie> movies= new ArrayList<Movie>();
     Media media;
+    HashMap<String, String> categoryMap = new HashMap<>();
 
 
     public Mainmenu() {
@@ -32,7 +34,7 @@ public class Mainmenu {
           switch (choice){
               case 1 : search(user); break;
               case 2 : showCategory(user); break;
-              case 3 : viewWatched(user); break;
+              case 3 : viewWatched(user);break;
               case 4 : viewSaved(user);break;
               case 5 : {
                   textUI.displayMsg("leaving mainmenu");
@@ -91,11 +93,7 @@ public class Mainmenu {
     }
     }
 
-
-
-
-
-
+    
 
     private void showCategory(User user) {
         ArrayList<Movie> movies = createMovie();
@@ -105,7 +103,7 @@ public class Mainmenu {
         library.addAll(movies);
         library.addAll(series);
 
-                int choice = textUI.promptNumeric("""
+                String choice = textUI.promptText("""
                         Please choose an option:
                         1. Drama
                         2. Family
@@ -133,8 +131,16 @@ public class Mainmenu {
                         ---------------
                         24. Exit
                         """);
-                media.getCategory().split(",");
+                //media.getCategory().split(",");
+                categoryMap.forEach ((m, c)->{if (c.contains(choice)){
+                    textUI.displayMsg(m+" : "+c);
+                }
 
+
+                });
+
+                /*
+                categoryMap.containsValue(choice);
                 switch (choice) {
                     case 1:
                         playChoice(user,media);
@@ -152,7 +158,12 @@ public class Mainmenu {
                         textUI.displayMsg("invalid choice, try again");
                         break;
                 }
+
+                 */
+            search(user);
+            displayMainMenu(user);
             }
+
 
 
 
@@ -160,7 +171,8 @@ public class Mainmenu {
         //textUI.displayMsg("Here is a list of movies/series you have watched:");
         movies = createMovie();
         series = createSeries();
-        textUI.displayList(user.haveWatched, "Here is a list of movies you have watched: "); //Mangler liste
+        textUI.displayList(user.haveWatched, "Here is a list of movies you have watched: ");
+        displayMainMenu(user);
 
     }
 
@@ -228,6 +240,7 @@ public class Mainmenu {
             float rating = Float.parseFloat(r);
             movie = new Movie(title, releaseYear, category, rating);
             movies.add(movie);
+            this.categoryMap.put(title, category);
         }
         return movies;
     }
@@ -247,6 +260,7 @@ public class Mainmenu {
             String seasonsAndEpisodes = values[4].trim();
             serie = new Series(title, releaseYear, category, rating, seasonsAndEpisodes);
             series.add(serie);
+            this.categoryMap.put(title, category);
         }
         return series;
 
