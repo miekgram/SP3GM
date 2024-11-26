@@ -103,41 +103,39 @@ public class Mainmenu {
         library.addAll(movies);
         library.addAll(series);
 
-                String choice = textUI.promptText("""
-                        Please choose an option:
-                        1. Drama
-                        2. Family
-                        3. Biography
-                        4. History
-                        5. Sport
-                        6. Crime
-                        7. Adventure
-                        8. Fantasy
-                        9. Musical
-                        10. Thriller
-                        11. Film-noir
-                        12. Horror
-                        13. Romance
-                        14. Comedy
-                        15. Mystery
-                        16. War
-                        17. Action
-                        18. Western
-                        19. Music
-                        20. Sci-fi
-                        21. Animation
-                        22. Talk-show
-                        23. Documentary
-                        ---------------
-                        24. Exit
-                        """);
+        String choice = textUI.promptText("""
+                Please choose an option:
+                1. Drama
+                2. Family
+                3. Biography
+                4. History
+                5. Sport
+                6. Crime
+                7. Adventure
+                8. Fantasy
+                9. Musical
+                10. Thriller
+                11. Film-noir
+                12. Horror
+                13. Romance
+                14. Comedy
+                15. Mystery
+                16. War
+                17. Action
+                18. Western
+                19. Music
+                20. Sci-fi
+                21. Animation
+                22. Talk-show
+                23. Documentary
+                ---------------
+                24. Exit
+                """);
                 //media.getCategory().split(",");
-                categoryMap.forEach ((m, c)->{if (c.contains(choice)){
-                    textUI.displayMsg(m+" : "+c);
-                }
-
-
-                });
+        categoryMap.forEach ((m, c) -> {if (c.contains(choice)){
+            textUI.displayMsg(m+" : "+c);
+            }
+        });
 
                 /*
                 categoryMap.containsValue(choice);
@@ -159,10 +157,10 @@ public class Mainmenu {
                         break;
                 }
 
-                 */
-            search(user);
-            displayMainMenu(user);
-            }
+         */
+        search(user);
+        displayMainMenu(user);
+    }
 
 
 
