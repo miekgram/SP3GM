@@ -54,14 +54,14 @@ public class TextUI {
         return choices;
     }
     //public void displayList(ArrayList<String> options, String msg){
-    public void displayMovieList(ArrayList<Movie> options, String msg){
+    public void displayList(ArrayList<Media> options, String msg){
         System.out.println("*******");
         System.out.println(msg);
         System.out.println("*******");
 
         int i = 1;
 
-        for (Movie option : options) {
+        for (Media option : options) {
             System.out.println(i+": "+option.getTitle()); //Tilføj de andre attributes, hvis i vil vise andet en title.
             i++;
         }
