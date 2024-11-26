@@ -56,7 +56,7 @@ public class Mainmenu {
         String title = textUI.promptText("Enter the title of the movie or series you want to search for");
 
         for (Media medias : library) {
-            if (medias.getTitle().equalsIgnoreCase(title.trim())) {
+            if (medias.getTitle().contains(title.trim())) {
                 int choice = textUI.promptNumeric("""
                         Please choose an option:
                         1. Play
