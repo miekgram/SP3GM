@@ -12,6 +12,7 @@ public class Mainmenu {
     ArrayList<Movie> movies= new ArrayList<Movie>();
     Media media;
 
+
     public Mainmenu() {
         textUI = new TextUI();
     }
@@ -52,11 +53,12 @@ public class Mainmenu {
         library.addAll(movies);
         library.addAll(series);
 
-
         String title = textUI.promptText("Enter the title of the movie or series you want to search for");
+        boolean foundMatchingTitle = false;
 
-        for (Media medias : library) {
-            if (medias.getTitle().contains(title.trim())) {
+        for (Media media : library){
+            if(media.getTitle().equalsIgnoreCase(title)){
+                foundMatchingTitle = true;
                 int choice = textUI.promptNumeric("""
                         Please choose an option:
                         1. Play
@@ -65,10 +67,11 @@ public class Mainmenu {
                         """);
                 switch (choice) {
                     case 1:
-                        playChoice(medias.getTitle());
+                        playChoice(user,media);
                         break;
                     case 2:
-                        saveMedia(user, medias);
+                        saveMedia(user, media);
+                        displayMainMenu(user);
                         break;
                     case 3: {
                         textUI.displayMsg("leaving search");
@@ -79,11 +82,13 @@ public class Mainmenu {
                         textUI.displayMsg("invalid choice, try again");
                         break;
                 }
-            } else if (!library.contains(title.trim())) {
-                textUI.displayMsg("Title doesn't match, try again");
-                search(user);
             }
         }
+
+        if(foundMatchingTitle == false){
+            textUI.displayMsg("Title doesn't match, try again");
+            search(user);
+    }
     }
 
 
@@ -93,15 +98,70 @@ public class Mainmenu {
 
 
     private void showCategory(User user) {
+        ArrayList<Movie> movies = createMovie();
+        ArrayList<Series> series = createSeries();
+
+        ArrayList<Media> library = new ArrayList<>();
+        library.addAll(movies);
+        library.addAll(series);
+
+                int choice = textUI.promptNumeric("""
+                        Please choose an option:
+                        1. Drama
+                        2. Family
+                        3. Biography
+                        4. History
+                        5. Sport
+                        6. Crime
+                        7. Adventure
+                        8. Fantasy
+                        9. Musical
+                        10. Thriller
+                        11. Film-noir
+                        12. Horror
+                        13. Romance
+                        14. Comedy
+                        15. Mystery
+                        16. War
+                        17. Action
+                        18. Western
+                        19. Music
+                        20. Sci-fi
+                        21. Animation
+                        22. Talk-show
+                        23. Documentary
+                        ---------------
+                        24. Exit
+                        """);
+                media.getCategory().split(",");
+
+                switch (choice) {
+                    case 1:
+                        playChoice(user,media);
+                        break;
+                    case 2:
+                        saveMedia(user, media);
+                        displayMainMenu(user);
+                        break;
+                    case 3: {
+                        textUI.displayMsg("leaving search");
+                        displayMainMenu(user);
+                        break;
+                    }
+                    default:
+                        textUI.displayMsg("invalid choice, try again");
+                        break;
+                }
+            }
 
 
-    }
+
     private void viewWatched(User user){
         //textUI.displayMsg("Here is a list of movies/series you have watched:");
         movies = createMovie();
         series = createSeries();
-        textUI.displayMovieList(movies, "Here is a list of movies you have watched: "); //Mangler liste
-        textUI.displaySeriesList(series, "Here is a list of series you have watched: "); //Mangler liste
+        textUI.displayList(user.haveWatched, "Here is a list of movies you have watched: "); //Mangler liste
+
     }
 
     private void saveMedia(User user, Media media){
@@ -117,10 +177,11 @@ public class Mainmenu {
 
 
     private void viewSaved(User user){
-        textUI.displayMsg("Here is a list of movies/series you have saved:");
+        textUI.displayMsg("Here is a list of what you have saved: ");
             for(Media media : user.savedForLater){
-                textUI.displayMsg(media.getTitle()); //Printer kun title
+                textUI.displayMsg(media.getTitle());//Printer kun title
             }
+            displayMainMenu(user);
             //Overvej om brugeren skal have en switch case der spørger
             //om brugeren har lyst til at slette noget på listen
 
@@ -142,10 +203,13 @@ public class Mainmenu {
 
     }
 
-
-
-    public void playChoice(String title) {
-        textUI.displayMsg("Playing: " + title);
+    public void playChoice(User user, Media media) {
+        textUI.displayMsg("Playing: " + media.getTitle());
+        user.haveWatched.add(media);
+        for(Media m : user.haveWatched){
+            textUI.displayMsg(m.getTitle());    //Printer kun title
+        }
+        displayMainMenu(user);
     }
 
 
@@ -188,4 +252,3 @@ public class Mainmenu {
 
     }
 }
-
