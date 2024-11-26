@@ -46,39 +46,48 @@ public class Mainmenu {
 
     public void search(User user) {
         ArrayList<Movie> movies = createMovie();
-        // ArrayList<Series> series = createSeries();
+        ArrayList<Series> series = createSeries();
 
         ArrayList<Media> library = new ArrayList<>();
         library.addAll(movies);
-        //library.addAll(series);
+        library.addAll(series);
 
 
-            String title = textUI.promptText("Enter the title of the movie or series you want to search for");
+        String title = textUI.promptText("Enter the title of the movie or series you want to search for");
 
-            for (Media medias : library) {
-              if (medias.getTitle().equalsIgnoreCase(title.trim())) {
-                    int choice = textUI.promptNumeric( """
-                    Please choose an option:
-                    1. Play
-                    2. Save title
-                    3. Exit
-                    """);
-                    switch (choice){
-                        case 1 : playChoice(medias.getTitle()); break;
-                        case 2 : saveMedia(user, medias); break;
-                        case 3 : {
-                            textUI.displayMsg("leaving search");
-                            displayMainMenu(user);
-                            break;
-                        }
-                        default : textUI.displayMsg("invalid choice, try again"); break;
+        for (Media medias : library) {
+            if (medias.getTitle().equalsIgnoreCase(title.trim())) {
+                int choice = textUI.promptNumeric("""
+                        Please choose an option:
+                        1. Play
+                        2. Save title
+                        3. Exit
+                        """);
+                switch (choice) {
+                    case 1:
+                        playChoice(medias.getTitle());
+                        break;
+                    case 2:
+                        saveMedia(user, medias);
+                        break;
+                    case 3: {
+                        textUI.displayMsg("leaving search");
+                        displayMainMenu(user);
+                        break;
                     }
-                } else {
-                    textUI.displayMsg("Title doesn't match, try again");
+                    default:
+                        textUI.displayMsg("invalid choice, try again");
+                        break;
                 }
+            } else if (!library.contains(title.trim())) {
+                textUI.displayMsg("Title doesn't match, try again");
+                search(user);
             }
-
+        }
     }
+
+
+
 
 
 
@@ -90,9 +99,9 @@ public class Mainmenu {
     private void viewWatched(User user){
         //textUI.displayMsg("Here is a list of movies/series you have watched:");
         movies = createMovie();
-        // series = createSeries();
+        series = createSeries();
         textUI.displayMovieList(movies, "Here is a list of movies you have watched: "); //Mangler liste
-        //textUI.displaySeriesList(series, "Here is a list of series you have watched: "); //Mangler liste
+        textUI.displaySeriesList(series, "Here is a list of series you have watched: "); //Mangler liste
     }
 
     private void saveMedia(User user, Media media){
@@ -150,7 +159,9 @@ public class Mainmenu {
             String title = (values[0].trim());                      //Skal vi bruge trim() på titlen? "TheGodfather"
             int releaseYear = Integer.parseInt(values[1].trim());   // trim() for at få " 1972" -> "1972"
             String category = values[2].trim();                     //  trim() for at " Crime, Drama" -> "Crime,Drama"
-            float rating = Float.parseFloat((values[3].trim()));
+            String r = (values[3].trim());
+            r = r.replace(',', '.');
+            float rating = Float.parseFloat(r);
             movie = new Movie(title, releaseYear, category, rating);
             movies.add(movie);
         }
@@ -166,7 +177,9 @@ public class Mainmenu {
             String title = (values[0].trim());
             String releaseYear = (values[1].trim());
             String category = values[2].trim();
-            float rating = Float.parseFloat((values[3].trim()));
+            String r = (values[3].trim());
+            r = r.replace(',', '.');
+            float rating = Float.parseFloat(r);
             String seasonsAndEpisodes = values[4].trim();
             serie = new Series(title, releaseYear, category, rating, seasonsAndEpisodes);
             series.add(serie);
