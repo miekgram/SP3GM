@@ -12,6 +12,7 @@ public class Mainmenu {
     ArrayList<Series> series = new ArrayList<Series>();
     ArrayList<Movie> movies= new ArrayList<Movie>();
     Media media;
+    String userPath = "data/userdata.csv";
     HashMap<String, String> categoryMap = new HashMap<>();
 
 
@@ -20,7 +21,7 @@ public class Mainmenu {
     }
 
   public void displayMainMenu(User user){
-      textUI.displayMsg("Welcome to mainmenu!");
+      textUI.displayMsg("Welcome to mainmenu" + " " + user.userName + "!");
 
 
           int choice = textUI.promptNumeric( """
@@ -32,7 +33,7 @@ public class Mainmenu {
                 5. Exit
                 """);
           switch (choice){
-              case 1 : search(user); break;
+              case 1 : search(user, "Please type the title of what you are searching for: "); break;
               case 2 : showCategory(user); break;
               case 3 : viewWatched(user);break;
               case 4 : viewSaved(user);break;
@@ -47,7 +48,7 @@ public class Mainmenu {
   }
 
 
-    public void search(User user) {
+    public void search(User user, String msgBeforeTypingTitle) {
         ArrayList<Movie> movies = createMovie();
         ArrayList<Series> series = createSeries();
 
@@ -55,7 +56,7 @@ public class Mainmenu {
         library.addAll(movies);
         library.addAll(series);
 
-        String title = textUI.promptText("Enter the title of the movie or series you want to search for");
+        String title = textUI.promptText(msgBeforeTypingTitle);
         boolean foundMatchingTitle = false;
 
         for (Media media : library){
@@ -65,7 +66,8 @@ public class Mainmenu {
                         Please choose an option:
                         1. Play
                         2. Save title
-                        3. Exit
+                        3. Remove from saved list
+                        4. Exit
                         """);
                 switch (choice) {
                     case 1:
@@ -75,7 +77,10 @@ public class Mainmenu {
                         saveMedia(user, media);
                         displayMainMenu(user);
                         break;
-                    case 3: {
+                    case 3:
+                        removeFromSaved(user,media);
+                        break;
+                    case 4: {
                         textUI.displayMsg("leaving search");
                         displayMainMenu(user);
                         break;
@@ -89,7 +94,7 @@ public class Mainmenu {
 
         if(foundMatchingTitle == false){
             textUI.displayMsg("Title doesn't match, try again");
-            search(user);
+            search(user, msgBeforeTypingTitle);
     }
     }
 
@@ -104,7 +109,7 @@ public class Mainmenu {
         library.addAll(series);
 
         String choice = textUI.promptText("""
-                Please choose an option:
+                Please choose an option by writing the name of the category:
                 1. Drama
                 2. Family
                 3. Biography
@@ -131,47 +136,23 @@ public class Mainmenu {
                 ---------------
                 24. Exit
                 """);
-                //media.getCategory().split(",");
-        categoryMap.forEach ((m, c) -> {if (c.contains(choice)){
+
+            categoryMap.forEach ((m, c) -> {if (c.contains(choice)){
             textUI.displayMsg(m+" : "+c);
             }
-        });
+            });
 
-                /*
-                categoryMap.containsValue(choice);
-                switch (choice) {
-                    case 1:
-                        playChoice(user,media);
-                        break;
-                    case 2:
-                        saveMedia(user, media);
-                        displayMainMenu(user);
-                        break;
-                    case 3: {
-                        textUI.displayMsg("leaving search");
-                        displayMainMenu(user);
-                        break;
-                    }
-                    default:
-                        textUI.displayMsg("invalid choice, try again");
-                        break;
-                }
-
-         */
-        search(user);
+        search(user,"Please type the title of what you would like to watch in this category");
         displayMainMenu(user);
+        //TODO: Hvis tid og lyst, så kan vi prøve at lave choice til int, så bruger kan skrive kategori ved tal.
     }
 
 
 
 
     private void viewWatched(User user){
-        //textUI.displayMsg("Here is a list of movies/series you have watched:");
-        movies = createMovie();
-        series = createSeries();
         textUI.displayList(user.haveWatched, "Here is a list of movies you have watched: ");
         displayMainMenu(user);
-
     }
 
     private void saveMedia(User user, Media media){
@@ -187,14 +168,10 @@ public class Mainmenu {
 
 
     private void viewSaved(User user){
-        textUI.displayMsg("Here is a list of what you have saved: ");
-            for(Media media : user.savedForLater){
-                textUI.displayMsg(media.getTitle());//Printer kun title
-            }
-            displayMainMenu(user);
-            //Overvej om brugeren skal have en switch case der spørger
-            //om brugeren har lyst til at slette noget på listen
+        textUI.displayList(user.savedForLater,"Here is a list of what you have saved: " );//Printer kun title
+        displayMainMenu(user);
 
+            //TODO:Brugeren skal have en switch case, der spørger om brugeren har lyst til at slette noget på listen
             //if yes
                 //removeFromSaved(user, media);
             //else
@@ -205,10 +182,10 @@ public class Mainmenu {
     public void removeFromSaved(User user, Media media){
         if(user.savedForLater.contains(media)){
             user.savedForLater.remove(media);
-            System.out.println(media.getTitle() + " has been removed from your saved list.");
+            textUI.displayMsg(media.getTitle() + " has been removed from your saved list.");
 
         }else{
-            System.out.println(media.getTitle() + " is not on your saved list.");
+            textUI.displayMsg(media.getTitle() + " is not on your saved list.");
         }
 
     }

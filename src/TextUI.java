@@ -59,27 +59,11 @@ public class TextUI {
         System.out.println(msg);
         System.out.println("*******");
 
-        int i = 1;
 
         for (Media option : options) {
-            System.out.println(i+": "+option.getTitle()); //Tilføj de andre attributes, hvis i vil vise andet en title.
-            i++;
+            displayMsg("- "+option.getTitle()); //andre attributer kan tilføjes, hvis ønsket
+
         }
     }
-    public void displaySeriesList(ArrayList<Series> options, String msg){
-        System.out.println("*******");
-        System.out.println(msg);
-        System.out.println("*******");
-
-        int i = 1;
-
-        for (Series option : options) {
-            System.out.println(i+": "+option.getTitle());
-            i++;
-        }
-    }
-
-
-
 
 }

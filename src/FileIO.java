@@ -24,20 +24,18 @@ public class FileIO {
             return data;
         }
 
-        public static void saveData(List<String> items, String path, String header) {
+        public static void saveData( String path, String header, String username, String password) {
             try {
                 FileWriter writer = new FileWriter(path);
                 writer.write(header + "\n"); //Giv csv filen en header
-                for (String s : items) {
-                    writer.write(s + "\n"); //"Tess, 40000";
-                }
+                writer.write( username + ", " + password + "\n");
                 writer.close();
             } catch (IOException e) {
                 System.out.println("something went wrong when writing to file");
             }
         }
 
-        public String[] readStreamingData(String path, int length) {
+        public String[] readUserData(String path, int length) {
             String[] data = new String[length];
             File file = new File(path);
             int counter = 0;

@@ -39,15 +39,23 @@ public class Startmenu {
     public void registerUsers() {
         String userName = textUI.promptText("Write a username: ");
         String password = textUI.promptText("Write a password: ");
-        User u = new User(userName, password);
-        this.users.add(u);
+        User user = new User(userName, password);
+        fileIO.saveData(this.userDataPath,"Username, password", userName, password);
     }
 
     public void login() {
-        textUI.displayMsg("Welcome back!");
+        ArrayList<String> users = new ArrayList<>();
+        users = fileIO.readData(this.userDataPath);
+        for (int i = 0; i < users.size(); i++) {
+            String[] values = users.get(i).split(",");
+            String username = (values[0].trim());
+            System.out.println(username);
+        }
         String userName = textUI.promptText("Write your username: ");
         String password = textUI.promptText("Write your password: ");
         this.currentUser = new User(userName, password);
+        textUI.displayMsg("Welcome back!");
+
     }
     public User getCurrentUser() {
         return this.currentUser;
