@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class User {
     String userName;
     String password;
-    ArrayList<Media> haveWatched = new ArrayList<Media>();
-    ArrayList<Media> savedForLater = new ArrayList<Media>();
+    ArrayList<String> haveWatched = new ArrayList<String>();
+    ArrayList<String> savedForLater = new ArrayList<String>();
 
 
 

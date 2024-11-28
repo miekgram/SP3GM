@@ -54,16 +54,17 @@ public class TextUI {
         return choices;
     }
     //public void displayList(ArrayList<String> options, String msg){
-    public void displayList(ArrayList<Media> options, String msg){
+    public void displayList(ArrayList<String> options, String msg){
         System.out.println("*******");
         System.out.println(msg);
         System.out.println("*******");
 
 
-        for (Media option : options) {
-            displayMsg("- "+option.getTitle()); //andre attributer kan tilføjes, hvis ønsket
+        for (String option : options) {
+            displayMsg("- "+option); //andre attributer kan tilføjes, hvis ønsket
 
         }
+        System.out.println("*******\n");
     }
 
 }

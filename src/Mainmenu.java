@@ -12,6 +12,8 @@ public class Mainmenu {
     ArrayList<Series> series = new ArrayList<Series>();
     ArrayList<Movie> movies= new ArrayList<Movie>();
     Media media;
+    Startmenu startmenu;
+
     String userPath = "data/userdata.csv";
     HashMap<String, String> categoryMap = new HashMap<>();
 
@@ -21,7 +23,7 @@ public class Mainmenu {
     }
 
   public void displayMainMenu(User user){
-      textUI.displayMsg("Welcome to mainmenu" + " " + user.userName + "!");
+      textUI.displayMsg("You are now in the mainmenu!"); //+ user.userName +
 
 
           int choice = textUI.promptNumeric( """
@@ -39,7 +41,8 @@ public class Mainmenu {
               case 4 : viewSaved(user);break;
               case 5 : {
                   textUI.displayMsg("leaving mainmenu");
-                  return;
+                  startmenu = new Startmenu();
+                  startmenu.startProgram();
               }
               default : textUI.displayMsg("invalid choice, try again");
 
@@ -87,6 +90,7 @@ public class Mainmenu {
                     }
                     default:
                         textUI.displayMsg("invalid choice, try again");
+                        search(user, "Please type a title of what you are searching for: ");
                         break;
                 }
             }
@@ -137,7 +141,41 @@ public class Mainmenu {
                 24. Exit
                 """);
 
-            categoryMap.forEach ((m, c) -> {if (c.contains(choice)){
+        /* HashMap<Integer, String> numberOfCategory = new HashMap<>();
+            numberOfCategory.put(1, "Drama");
+            numberOfCategory.put(2, "Family");
+            numberOfCategory.put(3, "Biography");
+            numberOfCategory.put(4, "History");
+            numberOfCategory.put(5, "Sport");
+            numberOfCategory.put(6, "Crime");
+            numberOfCategory.put(7, "Adventure");
+            numberOfCategory.put(8, "Fantasy");
+            numberOfCategory.put(9, "Musical");
+            numberOfCategory.put(10, "Thriller");
+            numberOfCategory.put(11, "Film-noir");
+            numberOfCategory.put(12, "Horror");
+            numberOfCategory.put(13, "Romance");
+            numberOfCategory.put(14, "Comedy");
+            numberOfCategory.put(15, "Mystery");
+            numberOfCategory.put(16, "War");
+            numberOfCategory.put(17, "Action");
+            numberOfCategory.put(18, "Western");
+            numberOfCategory.put(19, "Music");
+            numberOfCategory.put(20, "Sci-fi");
+            numberOfCategory.put(21, "Animation");
+            numberOfCategory.put(22, "Talk-show");
+            numberOfCategory.put(23, "Documentary");
+
+            if(numberOfCategory.containsKey(choice)){
+                String category = numberOfCategory.get(choice);
+                choice = category;
+            }
+
+        String finalChoice = choice;*/
+
+        //TODO: Choice kan ikke skrives som tal!
+
+        categoryMap.forEach ((m, c) -> {if (c.contains(choice)){
             textUI.displayMsg(m+" : "+c);
             }
             });
@@ -157,18 +195,18 @@ public class Mainmenu {
 
     private void saveMedia(User user, Media media){
         textUI.displayMsg("Here is a list of movies/series you have saved:");
-        if(!user.savedForLater.contains(media)){
-            user.savedForLater.add(media);
-            textUI.displayMsg(media.getTitle() + " has been added to your saved list.");
+        if(!user.savedForLater.contains(media.getTitle())){
+            user.savedForLater.add(media.getTitle());
+            textUI.displayMsg(media.getTitle() + " has been added to your saved list.\n");
 
         }else{
-            textUI.displayMsg(media.getTitle() + " is already in your saved list.");
+            textUI.displayMsg(media.getTitle() + " is already in your saved list.\n");
         }
     }
 
 
     private void viewSaved(User user){
-        textUI.displayList(user.savedForLater,"Here is a list of what you have saved: " );//Printer kun title
+        textUI.displayList(user.savedForLater,"Here is a list of what you have saved: " );
         displayMainMenu(user);
 
             //TODO:Brugeren skal have en switch case, der spørger om brugeren har lyst til at slette noget på listen
@@ -180,22 +218,19 @@ public class Mainmenu {
     }
 
     public void removeFromSaved(User user, Media media){
-        if(user.savedForLater.contains(media)){
-            user.savedForLater.remove(media);
-            textUI.displayMsg(media.getTitle() + " has been removed from your saved list.");
+        if(user.savedForLater.contains(media.getTitle())){
+            user.savedForLater.remove(media.getTitle());
+            textUI.displayMsg(media.getTitle() + " has been removed from your saved list.\n");
 
         }else{
-            textUI.displayMsg(media.getTitle() + " is not on your saved list.");
+            textUI.displayMsg(media.getTitle() + " is not on your saved list.\n");
         }
 
     }
 
     public void playChoice(User user, Media media) {
         textUI.displayMsg("Playing: " + media.getTitle());
-        user.haveWatched.add(media);
-        for(Media m : user.haveWatched){
-            textUI.displayMsg(m.getTitle());    //Printer kun title
-        }
+        user.haveWatched.add(media.getTitle());
         displayMainMenu(user);
     }
 
@@ -206,10 +241,10 @@ public class Mainmenu {
 
         for (int i = 0; i < listOfFilms.size(); i++) {
             //The Godfather; 1972; Crime, Drama; 9,2;
-            String[] values = listOfFilms.get(i).split(";");  //values = [title ; year ; category ; rating]
-            String title = (values[0].trim());                      //Skal vi bruge trim() på titlen? "TheGodfather"
-            int releaseYear = Integer.parseInt(values[1].trim());   // trim() for at få " 1972" -> "1972"
-            String category = values[2].trim();                     //  trim() for at " Crime, Drama" -> "Crime,Drama"
+            String[] values = listOfFilms.get(i).split(";");  
+            String title = (values[0].trim());
+            int releaseYear = Integer.parseInt(values[1].trim());
+            String category = values[2].trim();
             String r = (values[3].trim());
             r = r.replace(',', '.');
             float rating = Float.parseFloat(r);

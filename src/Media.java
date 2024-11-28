@@ -29,14 +29,13 @@ public abstract class Media {
 
 
 
-
     public void addToWatched() {
-        //this.haveWatched.add(media);
+
 
     }
 
     public void addToSaved() {
-        //this.savedForLater.add(media);
+
 
     }
 

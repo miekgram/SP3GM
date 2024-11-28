@@ -24,16 +24,16 @@ public class FileIO {
             return data;
         }
 
-        public static void saveData( String path, String header, String username, String password) {
-            try {
-                FileWriter writer = new FileWriter(path);
-                writer.write(header + "\n"); //Giv csv filen en header
-                writer.write( username + ", " + password + "\n");
-                writer.close();
-            } catch (IOException e) {
-                System.out.println("something went wrong when writing to file");
-            }
+    public static void saveData( String path, String username, String password) {
+        try {
+            FileWriter writer = new FileWriter(path,true); //append = true gør at den skriver videre på filen og ikke overskriver det  hele ved næste run:)
+//          writer.write(header + "\n"); //Giv csv filen en header
+            writer.write( username + ", " + password + "\n");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("something went wrong when writing to file");
         }
+    }
 
         public String[] readUserData(String path, int length) {
             String[] data = new String[length];
